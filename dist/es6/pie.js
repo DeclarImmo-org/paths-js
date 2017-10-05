@@ -2,12 +2,12 @@ import Linear from './linear'
 import Sector from './sector'
 import { sum, enhance } from './ops'
 
-export default function({data, accessor, center, r, R, compute}) {
+export default function({data, accessor, center, r, R, startAngle = 0, compute}) {
   let values = data.map(accessor)
   let s = sum(values)
   let scale = Linear([0, s], [0, 2 * Math.PI])
   let curves = []
-  let t = 0
+  let t = startAngle / 360 * s
   for (let [i, item] of data.entries()) {
     let value = values[i]
     curves.push(enhance(compute, {

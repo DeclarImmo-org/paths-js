@@ -24,13 +24,15 @@ exports['default'] = function (_ref) {
   var center = _ref.center;
   var r = _ref.r;
   var R = _ref.R;
+  var _ref$startAngle = _ref.startAngle;
+  var startAngle = _ref$startAngle === undefined ? 0 : _ref$startAngle;
   var compute = _ref.compute;
 
   var values = data.map(accessor);
   var s = (0, _ops.sum)(values);
   var scale = (0, _linear2['default'])([0, s], [0, 2 * Math.PI]);
   var curves = [];
-  var t = 0;
+  var t = startAngle / 360 * s;
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
   var _iteratorError = undefined;
