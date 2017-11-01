@@ -19,6 +19,7 @@ define(['exports', 'module', './linear', './rectangle', './ops'], function (expo
     var max = _ref.max;
     var _ref$gutter = _ref.gutter;
     var gutter = _ref$gutter === undefined ? 10 : _ref$gutter;
+    var barWidth = _ref.barWidth;
     var _ref$offset = _ref.offset;
     var offset = _ref$offset === undefined ? [0, 0] : _ref$offset;
     var compute = _ref.compute;
@@ -101,8 +102,10 @@ define(['exports', 'module', './linear', './rectangle', './ops'], function (expo
       }
     }
 
+    gutter = barWidth && (width - groups.length * data.length * barWidth) / groups.length || gutter;
+
     var n = groups.length;
-    var groupWidth = (width - gutter * (n - 1)) / n;
+    var groupWidth = (width - gutter * n) / n;
     var curves = [];
     var scale = (0, _Linear['default'])([min, max], [height + offY, offY]);
 
@@ -118,7 +121,7 @@ define(['exports', 'module', './linear', './rectangle', './ops'], function (expo
         var g = _step2$value[1];
 
         var w = groupWidth / g.length;
-        var shift = (groupWidth + gutter) * i + offX;
+        var shift = (groupWidth + gutter) * i + gutter / 2 + offX;
         var _iteratorNormalCompletion4 = true;
         var _didIteratorError4 = false;
         var _iteratorError4 = undefined;

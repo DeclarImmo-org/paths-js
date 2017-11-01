@@ -2,7 +2,7 @@ import Linear from './linear'
 import Rectangle from './rectangle'
 import { id, enhance } from './ops'
 
-export default function({data, accessor = id, width, height, min, max, gutter = 10, offset = [0, 0], compute}) {
+export default function({data, accessor = id, width, height, min, max, gutter = 10, barWidth, offset = [0, 0], compute}) {
   let groups = []
   let minUnset = false
   let maxUnset = false
@@ -22,14 +22,16 @@ export default function({data, accessor = id, width, height, min, max, gutter = 
     }
   }
 
+  gutter = barWidth && ((width - (groups.length * data.length * barWidth)) / groups.length) || gutter
+
   let n = groups.length
-  let groupWidth = (width - gutter * (n - 1)) / n
+  let groupWidth = (width - gutter * n) / n
   let curves = []
   let scale = Linear([min, max], [height + offY, offY])
 
   for(let [i, g] of groups.entries()) {
     let w = groupWidth / g.length
-    let shift = (groupWidth + gutter) * i + offX
+    let shift = (groupWidth + gutter) * i + (gutter / 2) + offX
     for(let [j, el] of g.entries()) {
       let left = shift + w * j
       let right = left + w
